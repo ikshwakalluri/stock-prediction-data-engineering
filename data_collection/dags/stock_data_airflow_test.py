@@ -19,7 +19,7 @@ with DAG(
 ) as dag:
 
     def fetch_data():
-        url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=WGZXNCUUJJGWK8QA"
+        url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=WGZXNCUUJJGWK8QA"
         r = requests.get(url)
         data = r.json()
         filepath = "/opt/airflow/data_collection/temp_data/raw_stock_data.csv"
