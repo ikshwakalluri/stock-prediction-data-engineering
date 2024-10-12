@@ -4,15 +4,10 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 import requests
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-import json
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
-
-# import io
 import os
-
-# import concurrent.futures
 import shutil
 
 # Define your default arguments
@@ -25,7 +20,7 @@ default_args = {
 
 # DAG DEFINITION
 with DAG(
-    dag_id="batch_stock_data_airflow_s3_yearly",
+    dag_id="batch_stock_data_airflow_s3_local",
     default_args=default_args,
     schedule_interval="@once",
     catchup=False,
@@ -36,7 +31,7 @@ with DAG(
         batch_num,
         base_temp_dir="/opt/airflow/data_collection/temp_data/",
     ):
-        # Fetch historical data from 2000-01-01 to 2024-10-01
+        # Fetch historical data from 2000-01-01 to 2024-10-01 for the given company symbol
         try:
             stock_data = yf.download(
                 company_symbol,
