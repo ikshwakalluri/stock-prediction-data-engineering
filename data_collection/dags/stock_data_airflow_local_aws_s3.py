@@ -20,7 +20,7 @@ default_args = {
 
 # DAG DEFINITION
 with DAG(
-    dag_id="batch_stock_data_airflow_s3_local",
+    dag_id="stock_data_airflow_local_aws_s3",
     default_args=default_args,
     schedule_interval="@once",
     catchup=False,
@@ -80,7 +80,7 @@ with DAG(
                 relative_path = os.path.relpath(
                     local_file_path, base_temp_dir
                 )  # Relative path from temp_dir
-                s3_key = f"raw_stock_data/{relative_path}"
+                s3_key = f"test_stock_data/{relative_path}"
 
                 # Upload the file to S3
                 s3_hook.load_file(
@@ -94,8 +94,11 @@ with DAG(
     # Main function to process batches
     def process_batches():
         base_temp_dir = "/opt/airflow/data_collection/temp_data/"
-        df_symbols = pd.read_csv(f"{base_temp_dir}company_tick_symbols_processed.csv")
 
+        df_symbols = pd.read_csv(
+            f"/opt/airflow/data_collection/company_data/company_tick_symbols_processed.csv"
+        )
+        df_symbols = df_symbols.head(10)  # Limit to first 10 for testing
         bucket_name = "raw-stock-data-airflow"
         if not os.path.exists(base_temp_dir):
             os.makedirs(base_temp_dir)
