@@ -32,7 +32,7 @@ x-airflow-common:
     AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
     AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
-    _PIP_ADDITIONAL_REQUIREMENTS: yfinance # Yahoo Finance library to fetch stock data
+    _PIP_ADDITIONAL_REQUIREMENTS: "-r /opt/airflow/data_collection/requirements.txt"
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
